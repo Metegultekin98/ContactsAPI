@@ -1,12 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webAPI", "webAPI\webAPI.csproj", "{0F231259-122D-4971-AAE5-B1F06FA083F5}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AAE87D17-1B10-4EC6-8C48-C94864366855}"
-	ProjectSection(SolutionItems) = preProject
-		compose.yaml = compose.yaml
-	EndProjectSection
-EndProject
+
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{258F6BE5-42CA-416F-811B-797B09FBF87F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "corePackages", "corePackages", "{32217845-D872-4DB3-9BD7-2B19CB17E1FB}"
@@ -15,9 +9,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "projects", "projects", "{B1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "contactsapi", "contactsapi", "{A19CDED2-BF34-4E1A-91B8-98EF3256B3D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Domain", "Core.Domain\Core.Domain.csproj", "{F78E66AA-3E61-4BF6-9D54-4257B9D50BA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Domain", "src\corePackages\Core.Domain\Core.Domain.csproj", "{F78E66AA-3E61-4BF6-9D54-4257B9D50BA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Persistence", "Core.Persistence\Core.Persistence.csproj", "{A9DA1362-E634-4F5F-ADCB-0538E3DB3972}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Persistence", "src\corePackages\Core.Persistence\Core.Persistence.csproj", "{A9DA1362-E634-4F5F-ADCB-0538E3DB3972}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Application", "src\corePackages\Core.Application\Core.Application.csproj", "{1C9E42E4-C751-41EC-9C0F-9113C7BB8A96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webAPI", "src\projects\contactsapi\webAPI\webAPI.csproj", "{0F231259-122D-4971-AAE5-B1F06FA083F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AAE87D17-1B10-4EC6-8C48-C94864366855}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +40,10 @@ Global
 		{A9DA1362-E634-4F5F-ADCB-0538E3DB3972}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9DA1362-E634-4F5F-ADCB-0538E3DB3972}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9DA1362-E634-4F5F-ADCB-0538E3DB3972}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C9E42E4-C751-41EC-9C0F-9113C7BB8A96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C9E42E4-C751-41EC-9C0F-9113C7BB8A96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C9E42E4-C751-41EC-9C0F-9113C7BB8A96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C9E42E4-C751-41EC-9C0F-9113C7BB8A96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{32217845-D872-4DB3-9BD7-2B19CB17E1FB} = {258F6BE5-42CA-416F-811B-797B09FBF87F}
@@ -45,5 +52,6 @@ Global
 		{0F231259-122D-4971-AAE5-B1F06FA083F5} = {A19CDED2-BF34-4E1A-91B8-98EF3256B3D4}
 		{F78E66AA-3E61-4BF6-9D54-4257B9D50BA1} = {32217845-D872-4DB3-9BD7-2B19CB17E1FB}
 		{A9DA1362-E634-4F5F-ADCB-0538E3DB3972} = {32217845-D872-4DB3-9BD7-2B19CB17E1FB}
+		{1C9E42E4-C751-41EC-9C0F-9113C7BB8A96} = {32217845-D872-4DB3-9BD7-2B19CB17E1FB}
 	EndGlobalSection
 EndGlobal
