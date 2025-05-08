@@ -9,7 +9,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Autofac" Version="8.3.0" />
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
         <PackageReference Include="MediatR" Version="12.5.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.15">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
@@ -20,7 +26,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Core.Application\Core.Application.csproj" />
+      <ProjectReference Include="..\..\..\corePackages\Core.Application\Core.Application.csproj" />
+      <ProjectReference Include="..\webAPI.Application\webAPI.Application.csproj" />
+      <ProjectReference Include="..\webAPI.Persistence\webAPI.Persistence.csproj" />
     </ItemGroup>
 
 </Project>

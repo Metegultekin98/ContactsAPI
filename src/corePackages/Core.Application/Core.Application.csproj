@@ -7,7 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="12.0.0" />
+      <PackageReference Include="MediatR" Version="12.5.0" />
+      <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.3.0" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Core.CrossCuttingConcerns\Core.CrossCuttingConcerns.csproj" />
+      <ProjectReference Include="..\Core.Persistence\Core.Persistence.csproj" />
     </ItemGroup>
 
 </Project>
