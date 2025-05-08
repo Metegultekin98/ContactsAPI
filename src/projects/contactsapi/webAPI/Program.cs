@@ -1,10 +1,13 @@
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Core.Application.Pipelines.Security;
 using Core.Persistence;
+using Core.Utilities.Messages;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using webAPI.Application;
 using webAPI.Persistence.Modules;
@@ -34,6 +37,20 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod()
         .AllowAnyHeader()
         .Build());
+});
+
+builder.Services.AddSwaggerGen(opt =>
+{
+    opt.CustomSchemaIds(type => type.ToString());
+    opt.SwaggerDoc(ProjectSwaggerMessages.Version, new OpenApiInfo
+    {
+        Version = ProjectSwaggerMessages.Version,
+        Title = ProjectSwaggerMessages.Title,
+        Description = ProjectSwaggerMessages.Description
+    });
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    opt.IncludeXmlComments(xmlPath);
 });
 
 var app = builder.Build();
