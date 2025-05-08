@@ -1,4 +1,5 @@
 using System.Reflection;
+using Core.Application.Base.Rules;
 using Core.Application.Pipelines.CheckId;
 using Core.Application.Pipelines.Transaction;
 using Core.Application.Pipelines.Validation;
@@ -26,6 +27,8 @@ public static class ApplicationServiceRegistration
 
         services.AddSubClassesOfType(Assembly.GetExecutingAssembly(), typeof(BaseBusinessRules));
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        
+        services.AddScoped(typeof(BaseBusinessRules<,>));
 
         return services;
     }
