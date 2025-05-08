@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Core.Application.Pipelines.Security;
+using Core.CrossCuttingConcerns.Exceptions.Extensions;
 using Core.Persistence;
 using Core.Utilities.Messages;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -74,6 +75,7 @@ app.UseCors("AllowAll");
 app.UseRouting();
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.ConfigureCustomExceptionMiddleware();
 
 app.MapControllers();
 
