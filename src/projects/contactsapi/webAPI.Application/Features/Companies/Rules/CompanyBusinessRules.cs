@@ -8,6 +8,11 @@ namespace webAPI.Application.Features.Companies.Rules;
 
 public class CompanyBusinessRules : BaseBusinessRules
 {
+    private readonly ICompanyRepository _companyRepository;
+    public CompanyBusinessRules(ICompanyRepository companyRepository)
+    {
+        _companyRepository = companyRepository;
+    }
     public Task CompanyShouldExistWhenSelected(Company? company)
     {
         if (company == null)

@@ -11,6 +11,7 @@ public class User : Entity<Guid>
     
     public virtual Company Company { get; set; }
     public virtual ICollection<ContactInfo> ContactInfos { get; set; } = null!;
+    public virtual ICollection<Report> Reports { get; set; } = null!;
 
     public User()
     {

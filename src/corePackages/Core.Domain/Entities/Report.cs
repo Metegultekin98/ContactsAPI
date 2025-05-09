@@ -8,4 +8,6 @@ public class Report : Entity<Guid>
     public DateTime RequestedDate { get; set; }
     public string RequestedFor { get; set; }
     public ReportStatu ReportStatu { get; set; }
+    
+    public virtual ICollection<User> Users { get; set; } = null!;
 }

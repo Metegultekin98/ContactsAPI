@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Core.Domain.Entities.Base;
+using Core.Persistence.Dynamic;
 using Core.Persistence.Paging;
 using Core.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore.Query;
@@ -32,7 +33,7 @@ public static class MockRepositoryHelper
         SetupDeleteAsync<TRepository, TEntity, TEntityId>(mockRepo, entityList);
         SetupAnyAsync<TRepository, TEntity, TEntityId>(mockRepo, entityList);
     }
-
+    
     private static void SetupGetListAsync<TRepository, TEntity, TEntityId>(Mock<TRepository> mockRepo, List<TEntity> entityList)
         where TEntity : Entity<TEntityId>, new()
         where TEntityId : struct, IEquatable<TEntityId>

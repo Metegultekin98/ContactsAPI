@@ -3,6 +3,7 @@ using AutoMapper;
 using Core.Application.Responses.Concrete;
 using Core.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using webAPI.Application.Features.Reports.Rules;
 using webAPI.Application.Services.Repositories;
 
@@ -18,7 +19,7 @@ public class GetByIdReportQuery : IRequest<CustomResponseDto<GetByIdReportRespon
         private readonly IReportRepository _reportRepository;
         private readonly ReportBusinessRules _reportBusinessRules;
 
-        public GetByIdReportQueryHandler(IMapper mapper, IReportRepository reportRepository, ReportBusinessRules reportBusinessRules)
+        public GetByIdReportQueryHandler(IReportRepository reportRepository,IMapper mapper, ReportBusinessRules reportBusinessRules)
         {
             _mapper = mapper;
             _reportRepository = reportRepository;
@@ -27,7 +28,10 @@ public class GetByIdReportQuery : IRequest<CustomResponseDto<GetByIdReportRespon
 
         public async Task<CustomResponseDto<GetByIdReportResponse>> Handle(GetByIdReportQuery request, CancellationToken cancellationToken)
         {
-            Report? report = await _reportRepository.GetAsync(predicate: r => r.Id == request.Id, cancellationToken: cancellationToken);
+            Report? report = await _reportRepository.GetAsync(predicate: r => r.Id == request.Id, 
+                include: x => x.Include(x => x.Users)
+                    .Include(x => x.Users).ThenInclude(x => x.ContactInfos),
+                cancellationToken: cancellationToken);
             await _reportBusinessRules.ReportShouldExistWhenSelected(report);
 
             GetByIdReportResponse response = _mapper.Map<GetByIdReportResponse>(report);

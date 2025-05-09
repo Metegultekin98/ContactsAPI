@@ -15,6 +15,7 @@ public class UserConfiguration : BaseConfiguration<User, Guid>
         builder.Property(x => x.FirstName).HasColumnName("FirstName").IsRequired().HasMaxLength(LengthContraints.NameMaxLength);
         builder.Property(x => x.LastName).HasColumnName("LastName").IsRequired().HasMaxLength(LengthContraints.NameMaxLength);
         builder.HasMany(u => u.ContactInfos);
+        builder.HasMany(u => u.Reports);
         builder.ToTable(TableNameConstants.USER);
     }
 }

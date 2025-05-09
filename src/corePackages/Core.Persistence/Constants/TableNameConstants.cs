@@ -6,4 +6,5 @@ public class TableNameConstants
     public const string COMPANY = "Companies";
     public const string CONTACT_INFO = "ContactInfos";
     public const string REPORT = "Reports";
+    public const string USER_REPORT = "UserReports";
 }

@@ -94,19 +94,19 @@ public class UserManager : IUserService
     public async Task<CustomResponseDto<NoContentDto>> CreateReportByLocationAsync(CreateReportDto createReportDto)
     {
         IPaginate<User> users = await _userRepository.GetListAsync(
-            x => x.ContactInfos.Any(y => y.Type == "Konum" && y.Value == createReportDto.RequestedFor),
+            x => x.ContactInfos.Any(y => (y.Type.ToLower() == "konum" || y.Type.ToLower() == "location") && y.Value == createReportDto.RequestedFor),
             include: x => x.Include(x => x.ContactInfos),
             cancellationToken: default
         );
         
-        GetListResponse<UserReportItemDto> mappedUsers =
-            _mapper.Map<GetListResponse<UserReportItemDto>>(users);
+        GetListResponse<UserReportItemDto> mappedUsers = _mapper.Map<GetListResponse<UserReportItemDto>>(users);
 
         Report addedReport = await _reportRepository.AddAsync(new Report
         {
             RequestedFor = createReportDto.RequestedFor,
             RequestedDate = DateTime.UtcNow,
-            ReportStatu = Enums.ReportStatu.InProgress
+            ReportStatu = Enums.ReportStatu.InProgress,
+            Users = users.Items,
         });
         
         await AddReportToQueue(mappedUsers, addedReport);

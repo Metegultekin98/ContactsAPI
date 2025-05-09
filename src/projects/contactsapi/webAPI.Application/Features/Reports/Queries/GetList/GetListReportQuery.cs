@@ -6,6 +6,7 @@ using Core.Application.Responses.Concrete;
 using Core.Domain.Entities;
 using Core.Persistence.Paging;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using webAPI.Application.Services.Repositories;
 
 namespace webAPI.Application.Features.Reports.Queries.GetList;
@@ -34,6 +35,8 @@ public class GetListReportQuery : IRequest<CustomResponseDto<GetListResponse<Get
             IPaginate<Report> reports = await _reportRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
+                include: x => x.Include(x => x.Users)
+                    .Include(x => x.Users).ThenInclude(x => x.ContactInfos),
                 cancellationToken: cancellationToken
             );
 

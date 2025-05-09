@@ -6,31 +6,34 @@ using Core.Application.Responses.Concrete;
 using Core.Persistence.Dynamic;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using webAPI.Application.Features.ContactInfos.Rules;
 using webAPI.Application.Services.Repositories;
 
 namespace webAPI.Application.Features.ContactInfos.Queries.GetListByDynamic;
 
 public class GetListByDynamicContactInfoQuery : IRequest<CustomResponseDto<GetListResponse<GetListByDynamicContactInfoListItemDto>>>
 {
+    public PageRequest PageRequest { get; set; }
+    public DynamicQuery DynamicQuery { get; set; }
     public GetListByDynamicContactInfoQuery()
     {
         PageRequest = default!;
         DynamicQuery = default!;
     }
 
-    public PageRequest PageRequest { get; set; }
-    public DynamicQuery DynamicQuery { get; set; }
-
     public class GetListByDynamicContactInfoQueryHandler : IRequestHandler<GetListByDynamicContactInfoQuery,
         CustomResponseDto<GetListResponse<GetListByDynamicContactInfoListItemDto>>>
     {
         private readonly IContactInfoRepository _contactInfoRepository;
         private readonly IMapper _mapper;
+        private readonly ContactInfoBusinessRules _businessRules;
 
-        public GetListByDynamicContactInfoQueryHandler(IMapper mapper, IContactInfoRepository contactInfoRepository)
+        public GetListByDynamicContactInfoQueryHandler(IContactInfoRepository contactInfoRepository, IMapper mapper, 
+            ContactInfoBusinessRules businessRules)
         {
             _mapper = mapper;
             _contactInfoRepository = contactInfoRepository;
+            _businessRules = businessRules;
         }
 
         public async Task<CustomResponseDto<GetListResponse<GetListByDynamicContactInfoListItemDto>>> Handle(

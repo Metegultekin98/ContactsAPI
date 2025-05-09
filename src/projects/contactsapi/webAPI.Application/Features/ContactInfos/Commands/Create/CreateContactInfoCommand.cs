@@ -3,6 +3,7 @@ using AutoMapper;
 using Core.Application.Responses.Concrete;
 using Core.Domain.Entities;
 using MediatR;
+using webAPI.Application.Features.ContactInfos.Rules;
 using webAPI.Application.Services.Repositories;
 
 namespace webAPI.Application.Features.ContactInfos.Commands.Create;
@@ -24,11 +25,13 @@ public class CreateContactInfoCommand : IRequest<CustomResponseDto<CreatedContac
     {
         private readonly IContactInfoRepository _contactInfoRepository;
         private readonly IMapper _mapper;
+        private readonly ContactInfoBusinessRules _businessRules;
 
-        public CreateContactInfoCommandHandler(IContactInfoRepository contactInfoRepository, IMapper mapper)
+        public CreateContactInfoCommandHandler(IContactInfoRepository contactInfoRepository, IMapper mapper, ContactInfoBusinessRules businessRules)
         {
             _contactInfoRepository = contactInfoRepository;
             _mapper = mapper;
+            _businessRules = businessRules;
         }
 
         public async Task<CustomResponseDto<CreatedContactInfoResponse>> Handle(CreateContactInfoCommand request, CancellationToken cancellationToken)

@@ -3,6 +3,7 @@ using AutoMapper;
 using Core.Application.Responses.Concrete;
 using Core.Domain.Entities;
 using MediatR;
+using webAPI.Application.Features.Companies.Rules;
 using webAPI.Application.Services.Repositories;
 
 namespace webAPI.Application.Features.Companies.Commands.Create;
@@ -24,11 +25,13 @@ public class CreateCompanyCommand : IRequest<CustomResponseDto<CreatedCompanyRes
     {
         private readonly ICompanyRepository _companyRepository;
         private readonly IMapper _mapper;
+        private readonly CompanyBusinessRules _businessRules;
 
-        public CreateCompanyCommandHandler(ICompanyRepository companyRepository, IMapper mapper)
+        public CreateCompanyCommandHandler(ICompanyRepository companyRepository, IMapper mapper, CompanyBusinessRules businessRules)
         {
             _companyRepository = companyRepository;
             _mapper = mapper;
+            _businessRules = businessRules;
         }
 
         public async Task<CustomResponseDto<CreatedCompanyResponse>> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)

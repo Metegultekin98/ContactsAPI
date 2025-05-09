@@ -15,6 +15,5 @@ public class MappingProfiles : Profile
         CreateMap<Report, GetByIdReportResponse>().ReverseMap();
         CreateMap<Report, GetListReportListItemDto>().ReverseMap();
         CreateMap<IPaginate<Report>, GetListResponse<GetListReportListItemDto>>().ReverseMap();
-        CreateMap<IPaginate<Report>, GetListResponse<UserReportItemDto>>().ReverseMap();
     }
 }

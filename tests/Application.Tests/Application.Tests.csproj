@@ -22,8 +22,4 @@
       <ProjectReference Include="..\..\src\projects\contactsapi\webAPI.Application\webAPI.Application.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Features\Users\Queries\GetList\" />
-    </ItemGroup>
-
 </Project>
