@@ -5,6 +5,7 @@ using Core.Application.Pipelines.Transaction;
 using Core.Application.Pipelines.Validation;
 using Core.Application.Rules;
 using Core.Helpers.Extensions;
+using Core.Utilities.MessageBrokers.RabbitMq;
 using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
 
@@ -29,6 +30,8 @@ public static class ApplicationServiceRegistration
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         
         services.AddScoped(typeof(BaseBusinessRules<,>));
+        services.AddScoped<IMessageConsumer, MqConsumerHelper>();
+        services.AddScoped<IMessageBrokerHelper, MqQueueHelper>();
 
         return services;
     }
