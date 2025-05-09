@@ -1,8 +1,17 @@
 using System.Linq.Expressions;
+using System.Net;
+using AutoMapper;
+using Core.Application.Responses;
+using Core.Application.Responses.Concrete;
+using Core.Domain.ComplexTypes;
 using Core.Domain.Entities;
 using Core.Persistence.Paging;
+using Core.Utilities.MessageBrokers.RabbitMq;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
-using webAPI.Application.Features.Users.Rules;
+using Newtonsoft.Json;
+using webAPI.Application.Features.Reports.Dtos;
+using webAPI.Application.Features.Reports.Dtos.UserReport;
 using webAPI.Application.Services.Repositories;
 
 namespace webAPI.Application.Services.UsersService;
@@ -10,10 +19,19 @@ namespace webAPI.Application.Services.UsersService;
 public class UserManager : IUserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly IReportRepository _reportRepository;
+    private readonly IMessageBrokerHelper _mqQueueHelper;
+    private readonly IMapper _mapper;
 
-    public UserManager(IUserRepository userRepository)
+    public UserManager(IUserRepository userRepository, 
+        IReportRepository reportRepository,
+        IMessageBrokerHelper mqQueueHelper,
+        IMapper mapper)
     {
         _userRepository = userRepository;
+        _reportRepository = reportRepository;
+        _mqQueueHelper = mqQueueHelper;
+        _mapper = mapper;
     }
 
     public async Task<User?> GetAsync(
@@ -71,5 +89,39 @@ public class UserManager : IUserService
         User deletedUser = await _userRepository.DeleteAsync(user);
 
         return deletedUser;
+    }
+    
+    public async Task<CustomResponseDto<NoContentDto>> CreateReportByLocationAsync(CreateReportDto createReportDto)
+    {
+        IPaginate<User> users = await _userRepository.GetListAsync(
+            x => x.ContactInfos.Any(y => y.Type == "Konum" && y.Value == createReportDto.RequestedFor),
+            include: x => x.Include(x => x.ContactInfos),
+            cancellationToken: default
+        );
+        
+        GetListResponse<UserReportItemDto> mappedUsers =
+            _mapper.Map<GetListResponse<UserReportItemDto>>(users);
+
+        Report addedReport = await _reportRepository.AddAsync(new Report
+        {
+            RequestedFor = createReportDto.RequestedFor,
+            RequestedDate = DateTime.UtcNow,
+            ReportStatu = Enums.ReportStatu.InProgress
+        });
+        
+        await AddReportToQueue(mappedUsers, addedReport);
+
+        return CustomResponseDto<NoContentDto>.Success((int)HttpStatusCode.OK, new NoContentDto(), true);
+    }
+    
+    private async Task AddReportToQueue(GetListResponse<UserReportItemDto> users, Report addedReport)
+    {
+        UserReportMessage message = new UserReportMessage
+        {
+            ReportId = addedReport.Id,
+            Items = users.Items,
+        };
+
+        await _mqQueueHelper.QueueMessageAsync("report-processing-queue", JsonConvert.SerializeObject(message));
     }
 }

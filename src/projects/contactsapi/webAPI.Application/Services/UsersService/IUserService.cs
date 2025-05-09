@@ -1,7 +1,9 @@
 using System.Linq.Expressions;
+using Core.Application.Responses.Concrete;
 using Core.Domain.Entities;
 using Core.Persistence.Paging;
 using Microsoft.EntityFrameworkCore.Query;
+using webAPI.Application.Features.Reports.Dtos;
 
 namespace webAPI.Application.Services.UsersService;
 
@@ -29,4 +31,6 @@ public interface IUserService
     Task<User> AddAsync(User user);
     Task<User> UpdateAsync(User user);
     Task<User> DeleteAsync(User user, bool permanent = false);
+    Task<CustomResponseDto<NoContentDto>> CreateReportByLocationAsync(CreateReportDto createReportDto);
+
 }

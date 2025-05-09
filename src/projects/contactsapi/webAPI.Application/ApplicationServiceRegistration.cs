@@ -8,6 +8,7 @@ using Core.Helpers.Extensions;
 using Core.Utilities.MessageBrokers.RabbitMq;
 using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
+using webAPI.Application.Services.ReportsService;
 
 namespace webAPI.Application;
 
@@ -27,6 +28,7 @@ public static class ApplicationServiceRegistration
 
 
         services.AddSubClassesOfType(Assembly.GetExecutingAssembly(), typeof(BaseBusinessRules));
+        services.AddScopedWithManagers(typeof(IReportService).Assembly);
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         
         services.AddScoped(typeof(BaseBusinessRules<,>));

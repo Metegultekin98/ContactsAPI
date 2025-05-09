@@ -3,9 +3,11 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using ContactsAPI.BackgroundServices.RabbitMq;
 using Core.Application.Pipelines.Security;
 using Core.CrossCuttingConcerns.Exceptions.Extensions;
 using Core.Persistence;
+using Core.Utilities.MessageBrokers.RabbitMq;
 using Core.Utilities.Messages;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.OpenApi.Models;
@@ -39,6 +41,10 @@ builder.Services.AddCors(options =>
         .AllowAnyHeader()
         .Build());
 });
+
+builder.Services.Configure<MessageBrokerOptions>(builder.Configuration.GetSection("MessageBrokerOptions"));
+
+builder.Services.AddHostedService<ReportProcessingService>();
 
 builder.Services.AddSwaggerGen(opt =>
 {

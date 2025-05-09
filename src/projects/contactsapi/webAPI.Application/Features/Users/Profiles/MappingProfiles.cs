@@ -2,6 +2,7 @@ using AutoMapper;
 using Core.Application.Responses;
 using Core.Domain.Entities;
 using Core.Persistence.Paging;
+using webAPI.Application.Features.Reports.Dtos.UserReport;
 using webAPI.Application.Features.Users.Commands.Create;
 using webAPI.Application.Features.Users.Commands.Delete;
 using webAPI.Application.Features.Users.Commands.Update;
@@ -23,5 +24,6 @@ public class MappingProfiles : Profile
         CreateMap<User, GetByIdUserResponse>().ReverseMap();
         CreateMap<User, GetListUserListItemDto>().ReverseMap();
         CreateMap<IPaginate<User>, GetListResponse<GetListUserListItemDto>>().ReverseMap();
+        CreateMap<IPaginate<User>, GetListResponse<UserReportItemDto>>().ReverseMap();
     }
 }

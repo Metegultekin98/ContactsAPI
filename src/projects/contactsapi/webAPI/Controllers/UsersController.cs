@@ -3,7 +3,9 @@ using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Application.Responses.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using webAPI.Application.Features.Reports.Dtos;
 using webAPI.Application.Features.Users.Commands.Create;
+using webAPI.Application.Features.Users.Commands.CreateUserUserByLocation;
 using webAPI.Application.Features.Users.Commands.Delete;
 using webAPI.Application.Features.Users.Commands.Update;
 using webAPI.Application.Features.Users.Queries.GetById;
@@ -47,5 +49,14 @@ public class UsersController : BaseController
     {
         CustomResponseDto<DeletedUserResponse> result = await Mediator.Send(deleteUserCommand);
         return Ok(result);
+    }
+    
+    [HttpPost("CreateUserReportByLocation")]
+    public async Task<ActionResult<CustomResponseDto<NoContentDto>>> CreateUserReportByLocation([FromBody] CreateReportDto createReportDto)
+    {
+        CreateUserUserByLocationCommand createReportCommand = new() { CreateReportDto = createReportDto };
+        CustomResponseDto<NoContentDto> response = await Mediator.Send(createReportCommand);
+
+        return Created(uri: "", response);
     }
 }
