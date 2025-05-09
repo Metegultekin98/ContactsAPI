@@ -3,6 +3,7 @@ using AutoMapper;
 using Core.Application.Responses.Concrete;
 using Core.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using webAPI.Application.Features.Users.Rules;
 using webAPI.Application.Services.Repositories;
 
@@ -27,7 +28,10 @@ public class GetByIdUserQuery : IRequest<CustomResponseDto<GetByIdUserResponse>>
 
         public async Task<CustomResponseDto<GetByIdUserResponse>> Handle(GetByIdUserQuery request, CancellationToken cancellationToken)
         {
-            User? user = await _userRepository.GetAsync(predicate: b => b.Id == request.Id, cancellationToken: cancellationToken);
+            User? user = await _userRepository.GetAsync(predicate: b => b.Id == request.Id,
+                include: x => x.Include(x => x.ContactInfos)
+                    .Include(x => x.Company),
+                cancellationToken: cancellationToken);
             await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
 
             GetByIdUserResponse response = _mapper.Map<GetByIdUserResponse>(user);

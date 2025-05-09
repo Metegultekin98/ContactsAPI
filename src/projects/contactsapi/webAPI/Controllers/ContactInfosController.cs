@@ -8,6 +8,7 @@ using webAPI.Application.Features.ContactInfos.Commands.Create;
 using webAPI.Application.Features.ContactInfos.Commands.Delete;
 using webAPI.Application.Features.ContactInfos.Commands.Update;
 using webAPI.Application.Features.ContactInfos.Queries.GetById;
+using webAPI.Application.Features.ContactInfos.Queries.GetByUserId;
 using webAPI.Application.Features.ContactInfos.Queries.GetList;
 using webAPI.Application.Features.ContactInfos.Queries.GetListByDynamic;
 
@@ -19,6 +20,13 @@ public class ContactInfosController : BaseController
     public async Task<IActionResult> GetById([FromRoute] GetByIdContactInfoQuery getByIdContactInfoQuery)
     {
         CustomResponseDto<GetByIdContactInfoResponse> result = await Mediator.Send(getByIdContactInfoQuery);
+        return Ok(result);
+    }
+    
+    [HttpGet("GetByUserId/{UserId}")]
+    public async Task<IActionResult> GetByUserId([FromRoute] GetByUserIdContactInfoQuery getByUserIdContactInfoQuery)
+    {
+        CustomResponseDto<GetByUserIdContactInfoResponse> result = await Mediator.Send(getByUserIdContactInfoQuery);
         return Ok(result);
     }
 

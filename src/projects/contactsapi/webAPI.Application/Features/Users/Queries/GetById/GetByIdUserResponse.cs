@@ -1,5 +1,6 @@
 using Core.Application.Responses;
 using webAPI.Application.Features.Companies.Queries.GetList;
+using webAPI.Application.Features.ContactInfos.Queries.GetList;
 using static Core.Domain.ComplexTypes.Enums;
 
 namespace webAPI.Application.Features.Users.Queries.GetById;
@@ -12,6 +13,9 @@ public class GetByIdUserResponse : IResponse
     public RecordStatu Status { get; set; }
     public DateTime CreatedDate { get; set; }
     public GetListCompanyListItemDto Company { get; set; } = new();
+    public IList<GetListContactInfoListItemDto> ContactInfos { get; set; }
+
+
     public GetByIdUserResponse()
     {
         FirstName = string.Empty;

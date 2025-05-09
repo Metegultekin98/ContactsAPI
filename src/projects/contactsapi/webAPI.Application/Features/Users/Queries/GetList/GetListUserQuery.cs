@@ -6,6 +6,7 @@ using Core.Application.Responses.Concrete;
 using Core.Domain.Entities;
 using Core.Persistence.Paging;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using webAPI.Application.Services.Repositories;
 
 namespace webAPI.Application.Features.Users.Queries.GetList;
@@ -40,6 +41,7 @@ public class GetListUserQuery : IRequest<CustomResponseDto<GetListResponse<GetLi
             IPaginate<User> users = await _userRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
+                include: x => x.Include(x => x.ContactInfos).Include(x => x.Company),
                 cancellationToken: cancellationToken
             );
 
